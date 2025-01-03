@@ -1,10 +1,10 @@
-import { BarbershopService } from "@prisma/client";
+import { Service } from "@prisma/client";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 
 interface ServiceItemProps {
-    service: BarbershopService
+    service: Service
 }
 
 const ServiceItem = ({service}: ServiceItemProps) => {

@@ -1,12 +1,12 @@
 import { SearchIcon } from "lucide-react";
-import Header from "./_components/header";
-import { Button } from "./_components/ui/button";
-import { Input } from "./_components/ui/input";
+import Header from ".././_components/header";
+import { Button } from ".././_components/ui/button";
+import { Input } from ".././_components/ui/input";
 import Image from "next/image";
-import { db } from "./_lib/prisma";
-import BarbershopItem from "./_components/barbershop-items";
-import { quickSearchOptions } from "./_constants/search";
-import BookingItem from "./_components/booking-item";
+import { db } from ".././_lib/prisma";
+import BarbershopItem from "./_components/barbershop-item";
+import { quickSearchOptions } from ".././_constants/search";
+import BookingItem from ".././_components/booking-item";
 
 
 //server client/components

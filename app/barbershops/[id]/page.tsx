@@ -1,43 +1,31 @@
-import PhoneItem from "@/app/_components/phone-item";
-import ServiceItem from "@/app/_components/service-item";
-import SidebarSheet from "@/app/_components/sidebar-sheet";
-import { Button } from "@/app/_components/ui/button";
-import { Sheet, SheetTrigger } from "@/app/_components/ui/sheet";
 import { db } from "@/app/_lib/prisma";
-import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import BarbershopInfo from "./_components/barbershop-info";
 
-interface BarbershopPageProps {
+interface BarbershopDetaisPageProps {
     params: {
-        id: string
+        id: string;
     }
 }
 
-const BarbershopPage = async ({ params }: BarbershopPageProps) => {
+const BarbershopDetaisPage = async ({ params }: BarbershopDetaisPageProps) => {
+    if (!params.id) {
+        //TODO redirecionar para a home
+        return null
+    }
 
-    //Chamar o meu banco de dados
     const barbershop = await db.barbershop.findUnique({
         where: {
             id: params.id,
         },
-        include: {
-            services: true
-        }
     })
 
-    // caso ocorra um erro
     if (!barbershop) {
-        return notFound()
+        //TODO redirecionar para a home
+        return null
     }
 
-
-
-    return (
-        <BarbershopInfo barbershop={barbershop} />
-    )
+    return <h1>{barbershop.name}</h1>
+        
+    
 }
 
-export default BarbershopPage;
+export default BarbershopDetaisPage

@@ -83,7 +83,7 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
         <div className="p-5 space-y-3 border-b border-solid">
             <h2 className="font-bold uppercase text-gray-400 mb-3" >Serviços</h2>
             <div className="space-y-3">
-                {barbershop.services.map((service: { id: string; name: string; description: string; imageUrl: string; price: Decimal; barbershopId: string }) => (
+                {barbershop.service.map((service: { id: string; name: string; description: string; imageUrl: string; price: Decimal; barbershopId: string }) => (
                     <ServiceItem key={service.id}
                         service={service} />
                 ))}

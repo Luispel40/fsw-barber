@@ -19,6 +19,41 @@ model User {
   sessions Session[]
 }
 
+model Barbershop {
+  id       String @id @default(uuid())
+  name     String
+  address  String
+  imageUrl String
+
+  services Service[]
+  bookings Booking[]
+}
+
+model Service {
+  id           String  @id @default(uuid())
+  name         String
+  price        Decimal @db.Decimal(10, 2)
+  description  String
+  imageUrl     String
+  barbershopId String
+
+  barbershop Barbershop @relation(fields: [barbershopId], references: [id])
+
+  bookings Booking[]
+}
+
+model Booking {
+  id           String   @id @default(uuid())
+  date         DateTime
+  userId       String
+  barbershopId String
+  serviceId    String
+
+  user       User       @relation(fields: [userId], references: [id])
+  barbershop Barbershop @relation(fields: [barbershopId], references: [id])
+  service    Service    @relation(fields: [serviceId], references: [id])
+}
+
 model Account {
   id                String  @id @default(cuid())
   type              String
@@ -53,38 +88,4 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
-}
-
-model Barbershop {
-  id          String              @id @default(cuid())
-  name        String
-  address     String
-  phones      String[]
-  description String
-  imageUrl    String
-  createdAt   DateTime            @default(now())
-  updatedAt   DateTime            @updatedAt
-  services    BarbershopService[]
-}
-
-model BarbershopService {
-  id           String     @id @default(cuid())
-  name         String
-  description  String
-  imageUrl     String
-  price        Decimal    @db.Decimal(10, 2)
-  barbershopId String
-  barbershop   Barbershop @relation(fields: [barbershopId], references: [id])
-  bookings     Booking[]
-}
-
-model Booking {
-  id        String            @id @default(uuid())
-  userId    String
-  user      User              @relation(fields: [userId], references: [id])
-  serviceId String
-  service   BarbershopService @relation(fields: [serviceId], references: [id])
-  date      DateTime
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt
 }
