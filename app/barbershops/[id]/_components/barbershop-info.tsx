@@ -1,17 +1,10 @@
 "use client"
 
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { Barbershop } from "@prisma/client"
-import { ChevronLeftIcon, MapPinIcon, MenuIcon, ScissorsIcon, StarIcon } from "lucide-react"
-import SideMenu from "@/app/_components/side-menu"
-import { Button } from "@/app/_components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/app/_components/ui/sheet"
-import SidebarSheet from "@/app/_components/sidebar-sheet"
-import Link from "next/link"
-import ServiceItem from "@/app/_components/service-item"
-import { Decimal } from "@prisma/client/runtime/library"
-import PhoneItem from "@/app/_components/phone-item"
+import { Button } from "@/app/_components/ui/button";
+import { Barbershop } from "@prisma/client";
+import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface BarbershopInfoProps {
     barbershop: Barbershop
@@ -19,85 +12,44 @@ interface BarbershopInfoProps {
 
 const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
     const router = useRouter()
-
     const handleBackClick = () => {
         router.back()
     }
 
     return (
         <div>
-        {/**IMAGEM */}
-        <div className="relative w-full h-[250px]">
-            <Image
-                alt={barbershop.name}
-                src={barbershop?.imageUrl}
-                fill
-                className="object-cover"
-            />
-
-            <Button
-                size="icon"
-                variant="secondary"
-                className="absolute left-4 top-4"
-                asChild
-                onClick={handleBackClick}
-            >
-                <Link href="/">
-                    <ChevronLeftIcon />
-                </Link>
-            </Button>
-
-            <Sheet>
-                <SheetTrigger asChild>
-                    <Button size="icon"
-                        variant="outline"
-                        className="absolute right-4 top-4"
+            <div className="h-[250px] wfull relative object-cover">
+                <Button size="icon" variant="outline"
+                    className="absolute left-4 top-4 z-10"
+                    onClick={handleBackClick}
                     >
-                        <MenuIcon />
-                    </Button>
-                </SheetTrigger>
-                <SidebarSheet />
-            </Sheet>
-        </div>
-
-        {/**TITULO */}
-        <div className="p-5 border-b border-solid">
-            <h1 className="font-bold text-xl mb-3">{barbershop.name}</h1>
-            <div className="mb-2 flex items-center gap-2">
-                <MapPinIcon className="text-primary" size={18} />
-                <p className="text-sm">{barbershop?.address}</p>
+                    <ChevronLeftIcon />
+                </Button>
+                <Button size="icon" variant="outline"
+                    className="absolute right-4 top-4 z-10">
+                    <MenuIcon />
+                </Button>
+                <Image
+                    src={barbershop.imageUrl}
+                    alt={barbershop.name}
+                    fill
+                    className="opacity-75"
+                />
             </div>
-            <div className="flex items-center gap-2">
-                <StarIcon className="fill-primary text-primary" size={18} />
-                <p className="text-sm">{`5,0 (498 Avaliações)`}</p>
-            </div>
-        </div>
-
-        {/**DESCRIÇÃO */}
-        <div className="p-5 border-solid border-b space-y-3">
-            <h2 className="font-bold uppercase text-gray-400">Sobre Nós</h2>
-            <p className="text-sm text-justify">{barbershop?.description}</p>
-        </div>
-
-        {/**SERVIÇOS */}
-        <div className="p-5 space-y-3 border-b border-solid">
-            <h2 className="font-bold uppercase text-gray-400 mb-3" >Serviços</h2>
-            <div className="space-y-3">
-                {barbershop.service.map((service: { id: string; name: string; description: string; imageUrl: string; price: Decimal; barbershopId: string }) => (
-                    <ServiceItem key={service.id}
-                        service={service} />
-                ))}
+            <div className="px-5 pt-3 pb-6 border-b border-solid border-secondary">
+                <h1 className="text-xl font-bold "> {barbershop.name}</h1>
+                <div className="flex items-center gap-2 mt-2">
+                    <MapPinIcon className="text-primary " size={18} />
+                    <p className="text-sm">{barbershop.address}</p>
+                </div>
+                <div className="flex items-center gap-2 mt-2">
+                    <StarIcon className="text-primary " size={18} />
+                    <p className="text-sm">(899 avaliações)</p>
+                </div>
             </div>
         </div>
 
-        {/**CONTATO */}
-        <div className="p-5 space-y-3">
-            {barbershop.phones.map(phone => (
-                <PhoneItem key={phone} phone={phone} />
-            ))}
-        </div>
-    </div>
-    )
+    );
 }
 
-export default BarbershopInfo
+export default BarbershopInfo;
