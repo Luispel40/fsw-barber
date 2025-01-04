@@ -6,10 +6,6 @@ import GoogleProvider from "next-auth/providers/google"
 
 
 
-/////////////////////////////////////////////
-
-
-
 const handler = NextAuth({
     adapter: PrismaAdapter(db) as Adapter,
     providers: [
