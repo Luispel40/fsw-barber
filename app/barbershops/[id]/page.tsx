@@ -1,13 +1,12 @@
-import { db } from "@/app/_lib/prisma";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
 import BarbershopInfo from "./_components/barbershop-info";
 import ServiceItem from "./_components/service-item";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import PhoneItem from "./_components/phone-item";
+import { db } from "@/app/_lib/prisma";
 
 interface BarbershopDetaisPageProps {
     params: {
-        id: string;
+        id?: string;
     }
 }
 
@@ -34,19 +33,17 @@ const BarbershopDetaisPage = async ({ params }: BarbershopDetaisPageProps) => {
     }
 
     return (
-       <div>
-         <BarbershopInfo barbershop={barbershop} />
-         
-         <div className="px-5 flex flex-col gap-4 py-6">
-         {barbershop.services.map((service) => (
-             <ServiceItem key={service.id} service={service} />
-         ))}
-         </div>
-         <div className="px-5 flex flex-col gap-4 py-6">
-         <PhoneItem >(11) 99999-9999</PhoneItem>
-         <PhoneItem >(11) 99999-9999</PhoneItem>
-         </div>
-       </div>
+        <div>
+            <BarbershopInfo barbershop={barbershop} />
+
+            <div className="px-5 flex flex-col gap-4 py-6">
+                {barbershop.services.map((service) => (
+                    <ServiceItem key={service.id} barbershop={barbershop} isAutenticated={!!session} service={service} />
+                ))}
+            </div>
+            <div className="px-5 flex flex-col gap-4 py-6">
+            </div>
+        </div>
     )
 
 
