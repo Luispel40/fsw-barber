@@ -62,7 +62,7 @@ const Home = async () => {
       </div>
 
       {/** Agendamento */}
-      <BookingItem />
+      {/* <BookingItem /> */}
 
       <h2 className="mb-3 mt-6 uppercase text-gray-400 font-bold text-xs">
         RECOMENDADOS

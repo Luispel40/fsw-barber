@@ -1,11 +1,11 @@
 "use client"
 
+import { signIn, useSession } from "next-auth/react";
 import { Button } from "@/app/_components/ui/button";
 import { Calendar } from "@/app/_components/ui/calendar";
 import { Card, CardContent } from "@/app/_components/ui/card";
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/app/_components/ui/sheet";
 import { Barbershop, Booking, Service } from "@prisma/client";
-import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { generateDayTimeList } from "../_helpers/hours";
@@ -24,10 +24,9 @@ interface ServiceItemProps {
 }
 
 const ServiceItem = ({ service, barbershop, isAutenticated }: ServiceItemProps) => {
-    const router = useRouter()
-
     const { data } = useSession();
-
+    
+    const router = useRouter()
     const [date, setDate] = useState<Date | undefined>(undefined);
     const [hour, setHour] = useState<string | undefined>();
     const [submitIsLoading, setSubmitIsLoading] = useState(false);
@@ -42,13 +41,13 @@ const ServiceItem = ({ service, barbershop, isAutenticated }: ServiceItemProps) 
         }
 
         const refreshAvaliableHours = async () => {
-            const _dayBookings = await getDayBookings(date);
+            const _dayBookings = await getDayBookings(barbershop.id, date);
 
             setDayBookings(_dayBookings);
         };
 
         refreshAvaliableHours();
-    }, [date])
+    }, [date, barbershop.id]);
 
     const handleDateClick = (date: Date | undefined) => {
         setDate(date)
