@@ -9,9 +9,7 @@ import { isFuture, isPast } from "date-fns";
 const BookingsPage = async () => {
     const session = await getServerSession(authOptions)
 
-    if (!session?.user) {
-        redirect('/')
-    }
+    if (!session?.user) { return redirect('/') }
 
     const confirmedBookings = await db.booking.findMany({
         where: {
