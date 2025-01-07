@@ -13,9 +13,12 @@ const BookingsPage = async () => {
         redirect('/')
     }
 
-    const bookings = await db.booking.findMany({
+    const confirmedBookings = await db.booking.findMany({
         where: {
             userId: (session.user as any).id,
+            date: {
+                gte: new Date(),
+            }
         },
         include: {
             service: true,
@@ -23,8 +26,19 @@ const BookingsPage = async () => {
         },
     });
 
-    const confirmedBookings = bookings.filter(booking => isFuture(booking.date))
-    const finishedBookings = bookings.filter(booking => isPast(booking.date))
+    const finishedBookings = await db.booking.findMany({
+        where: {
+            userId: (session.user as any).id,
+            date: {
+                lt: new Date(),
+            }
+        },
+        include: {
+            service: true,
+            barbershop: true
+        },
+    });
+
 
     return (
         <>
@@ -36,21 +50,21 @@ const BookingsPage = async () => {
                 <h2 className="text-gray-400 uppercase font-bold text-sm mt-6 mb-3">Confirmados</h2>
 
                 <div className="flex flex-col gap-3">
-                {confirmedBookings.map(booking => (
-                    <BookingItem
-                        key={booking.id}
-                        booking={booking} />
-                ))}
+                    {confirmedBookings.map(booking => (
+                        <BookingItem
+                            key={booking.id}
+                            booking={booking} />
+                    ))}
                 </div>
 
                 <h2 className="text-gray-400 uppercase font-bold text-sm mt-6 mb-3">Finalizados</h2>
 
                 <div className="flex flex-col gap-3">
-                {finishedBookings.map(booking => (
-                    <BookingItem
-                        key={booking.id}
-                        booking={booking} />
-                ))}
+                    {finishedBookings.map(booking => (
+                        <BookingItem
+                            key={booking.id}
+                            booking={booking} />
+                    ))}
                 </div>
             </div>
         </>
