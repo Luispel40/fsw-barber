@@ -49,7 +49,9 @@ const Home = async () => {
       <Header />
 
       <div className="p-5 pt-5">
-        <h2 className="text-xl font-bold">Olá, Luis!</h2>
+        {session?.user
+          ? `Olá, ${session.user.name?.split(" ")[0]}!`
+          : "Olá! Vamos agendar ainda hoje?"}
         <p className="capitalize text-sm text-gray-400">
           {format(new Date(), "EEEE',' dd 'de' MMMM", { locale: ptBR })}
         </p>
@@ -85,11 +87,16 @@ const Home = async () => {
         </div>
 
         <div className="mt-6">
-          <h2 className="pl-5 text-xs mb-3 uppercase text-gray-400 font-bold">Agendamentos</h2>
 
-          <div className="pl-5 flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-            {confirmedBookings.map(booking => <BookingItem key={booking.id} booking={booking} />)}
-          </div>
+
+          {confirmedBookings.length > 0 && (
+            <>
+              <h2 className="pl-5 text-xs mb-3 uppercase text-gray-400 font-bold">Agendamentos</h2>
+              <div className="pl-5 flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+                {confirmedBookings.map(booking => <BookingItem key={booking.id} booking={booking} />)}
+              </div>
+            </>
+          )}
         </div>
 
         <h2 className="mb-3 mt-6 uppercase text-gray-400 font-bold text-xs">
