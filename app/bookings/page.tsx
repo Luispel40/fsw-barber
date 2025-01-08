@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import Header from "../_components/header";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "../_lib/auth";
 import { redirect } from "next/navigation";
 import { db } from "../_lib/prisma";
 import BookingItem from "../_components/booking-item";
@@ -12,6 +12,7 @@ const BookingsPage = async () => {
 
     const confirmedBookings = await db.booking.findMany({
         where: {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             userId: (session.user as any).id,
             date: {
                 gte: new Date(),
@@ -25,6 +26,7 @@ const BookingsPage = async () => {
 
     const finishedBookings = await db.booking.findMany({
         where: {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             userId: (session.user as any).id,
             date: {
                 lt: new Date(),

@@ -87,8 +87,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
               style={{
                 objectFit: "contain"
 
-              }}
-              alt={booking.barbershop.name} />
+              }}/>
             <div className="w-full absolute bottom-4 left-0">
               <Card className="mx-5">
                 <CardContent className="p-3 flex gap-2">
