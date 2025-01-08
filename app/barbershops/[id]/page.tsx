@@ -14,7 +14,6 @@ const BarbershopDetaisPage = async ({ params }: BarbershopDetaisPageProps) => {
     const session = await getServerSession(authOptions)
 
     if (!params.id) {
-        //TODO redirecionar para a home
         return null
     }
 
@@ -28,7 +27,6 @@ const BarbershopDetaisPage = async ({ params }: BarbershopDetaisPageProps) => {
     })
 
     if (!barbershop) {
-        //TODO redirecionar para a home
         return null
     }
 
