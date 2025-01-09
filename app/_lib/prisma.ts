@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client"
 
 declare global {
+  // @ts-ignore
   var cachedPrisma: PrismaClient
 }
 
