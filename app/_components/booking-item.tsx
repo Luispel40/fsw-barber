@@ -75,7 +75,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
         </Card>
       </SheetTrigger>
       <SheetContent className="px-0">
-        <SheetHeader className="px-5text-left pb-6 border-b border-solid border-secondary">
+        <SheetHeader className="px-5 text-left pb-6 border-b border-solid border-secondary">
           <SheetTitle>Informações da reserva</SheetTitle>
         </SheetHeader>
         <div className="px-5">
