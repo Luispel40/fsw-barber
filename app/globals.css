@@ -38,12 +38,15 @@
 
 @layer base {
   * {
-    @apply border-border antialiased;
+    @apply border-border;
   }
-  html {
-    @apply h-full;
-  }
+
   body {
-    @apply h-full bg-background text-foreground;
+    @apply bg-background text-foreground antialiased h-screen flex flex-col;
+  }
+  @layer utilities {
+    .border-border {
+      border-color: none;
+    }
   }
 }

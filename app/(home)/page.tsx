@@ -23,7 +23,7 @@ const Home = async () => {
       ? db.booking.findMany({
         where: {
           userId: (session.user as any).id,
-          date: {
+          date: { 
             gte: new Date(),
           },
         },
